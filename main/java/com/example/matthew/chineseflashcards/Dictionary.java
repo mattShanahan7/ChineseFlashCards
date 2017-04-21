@@ -6,8 +6,10 @@ package com.example.matthew.chineseflashcards;
 
 public final class Dictionary
 {
+    public int size = 28;
+
     public static final String[] characters = {
-            "⼸", "⼳", "⽇", "⼼", "⼽", "⼿", "⽉", "⽊", "⽬",
+            "⼸", "⼳", "⼯", "⽇", "⼼", "⼽", "⼿", "⽉", "⽊", "⽬",
             "⽼", "⼈", "⼀", "⼆", "⼋", "⼗", "⼉", "⻔", "⼑",
             "⼒", "⻢", "⼟", "⼣", "⼤", "⼥", "⼦", "⼨", "⼩"
     };
@@ -24,6 +26,12 @@ public final class Dictionary
             "moon", "wood", "eye", "old", "person", "one", "two", "eight",
             "ten", "child", "door", "knife", "power", "horse", "earth",
             "sunset", "big", "female", "son", "inch", "small"
+    };
+
+    public boolean[] used = {
+            false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false
     };
 
 

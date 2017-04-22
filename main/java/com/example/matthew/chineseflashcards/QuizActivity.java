@@ -14,6 +14,8 @@ import android.widget.TextView;
 public class QuizActivity extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "com.example.matthew.passMessage";
+    public static final String EXTRA_MESSAGE1 = "com.example.matthew.RESULTS";
+
 
     Dictionary dict = new Dictionary();
 
@@ -77,12 +79,13 @@ public class QuizActivity extends AppCompatActivity {
 
     public void setQuiz()
     {
-        if (counter == dict.size)
+        if (counter == 10) //dict.size)
         {
+            //this.finish();
             goToResults(findViewById(R.id.all));
-            /*
+
             //code to jump to the end screen activity
-            long totalTime = System.currentTimeMillis() - startTime;
+          /*  long totalTime = System.currentTimeMillis() - startTime;
 
 
             Intent intent = new Intent(this, ResultsActivity.class);
@@ -254,15 +257,18 @@ public class QuizActivity extends AppCompatActivity {
         //code to jump to the end screen activity
         long totalTime = System.currentTimeMillis() - startTime;
 
-
-        Intent intent = new Intent(this, ResultsActivity.class);
+       // Intent intent = new Intent( );
+        Intent intent = getIntent();
         String passMessage = "";
         passMessage += (totalCorrect + " ");
         passMessage += (totalIncorrect + " ");
         passMessage += (totalTime);
 
-        intent.putExtra(EXTRA_MESSAGE, passMessage);
-        startActivity(intent);
+        intent.putExtra("editTextValue", passMessage);
+        setResult(RESULT_OK, intent);
+        finish();
+
+        finish();
 
     }
 
@@ -325,7 +331,7 @@ public class QuizActivity extends AppCompatActivity {
                 public void run() {
                     b.setBackgroundColor(Color.GREEN);
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(300);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

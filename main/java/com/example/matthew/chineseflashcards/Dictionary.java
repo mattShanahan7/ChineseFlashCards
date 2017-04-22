@@ -34,5 +34,27 @@ public final class Dictionary
             false, false, false, false, false, false, false, false
     };
 
+    public boolean[] charCorrectLast = {
+            false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false
+    };
+
+    public boolean[] pinyinCorrectLast = {
+            false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false
+    };
+
+    public boolean[] englishCorrectLast = {
+            false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false
+    };
+
+    public long lastChineseTest = 0;
+    public long lastPinyinTest = 0;
+    public long lastEnglishTest = 0;
+
 
 }

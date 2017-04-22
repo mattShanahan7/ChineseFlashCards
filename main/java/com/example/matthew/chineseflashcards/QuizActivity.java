@@ -2,6 +2,7 @@ package com.example.matthew.chineseflashcards;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 
 public class QuizActivity extends AppCompatActivity {
+
+    public static final String EXTRA_MESSAGE = "com.example.matthew.passMessage";
 
     Dictionary dict = new Dictionary();
 
@@ -22,7 +25,11 @@ public class QuizActivity extends AppCompatActivity {
     int index;
     int counter; //to count how many questions have been asked
     int numCorrect;
-    int numIncorrect;
+    //int numIncorrect;
+    int totalCorrect;
+    int totalIncorrect;
+    int numClicks = 0; //number of picks per round
+    long startTime;
 
 
 
@@ -31,29 +38,36 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        //Dictionary dict = new Dictionary()
-
         for (int i = 0; i < dict.used.length; i++)
         {
             dict.used[i] = false;
         }
 
+        totalCorrect = 0;
+        totalIncorrect = 0;
 
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
-        //TextView textView = (TextView) findViewById(R.id.t);
+        startTime = System.currentTimeMillis();
 
         if (message.equals("English"))
+        {
             englishOnly = true;
-            //englishQuiz();
+            dict.lastEnglishTest = System.currentTimeMillis();
+        }
 
         else if (message.equals("Pinyin"))
+        {
             pinyinOnly = true;
-
+            dict.lastPinyinTest = System.currentTimeMillis();
+        }
 
         else if (message.equals("Chinese"))
+        {
             chineseOnly = true;
+            dict.lastChineseTest = System.currentTimeMillis();
+        }
 
         setQuiz();
 
@@ -65,7 +79,21 @@ public class QuizActivity extends AppCompatActivity {
     {
         if (counter == dict.size)
         {
+            goToResults(findViewById(R.id.all));
+            /*
             //code to jump to the end screen activity
+            long totalTime = System.currentTimeMillis() - startTime;
+
+
+            Intent intent = new Intent(this, ResultsActivity.class);
+            String passMessage = "";
+            passMessage += (totalCorrect + " ");
+            passMessage += (totalIncorrect + " ");
+            passMessage += (totalTime);
+
+            intent.putExtra(EXTRA_MESSAGE, passMessage);
+            startActivity(intent);
+            */
         }
 
         topButtons = new Button[]{
@@ -100,21 +128,10 @@ public class QuizActivity extends AppCompatActivity {
         //if the quiz is in english, check the flag and set up the board
         if (englishOnly)
         {
-            //index = (int)(dict.size * Math.random());
-            //while (dict.used[index] == true)
-            //    index = (int)(dict.size * Math.random());
-
-            //dict.used[index] = true;
-
-            //TextView textView = (TextView) findViewById(R.id.textView2);
             textView.setText(dict.english[index]);
-
-            //int topIndex = (int)(Math.random() * 4);
-            //int bottomIndex = (int)(Math.random() * 4);
 
             topButtons[topIndex].setText(dict.pinyin[index]);
             bottomButtons[bottomIndex].setText(dict.characters[index]);
-
 
             for (int j = 0; j<4; j++)
             {
@@ -232,7 +249,22 @@ public class QuizActivity extends AppCompatActivity {
 
     }
 
+    public void goToResults(View view)
+    {
+        //code to jump to the end screen activity
+        long totalTime = System.currentTimeMillis() - startTime;
 
+
+        Intent intent = new Intent(this, ResultsActivity.class);
+        String passMessage = "";
+        passMessage += (totalCorrect + " ");
+        passMessage += (totalIncorrect + " ");
+        passMessage += (totalTime);
+
+        intent.putExtra(EXTRA_MESSAGE, passMessage);
+        startActivity(intent);
+
+    }
 
 
 
@@ -247,43 +279,70 @@ public class QuizActivity extends AppCompatActivity {
                 b.getText().equals(dict.english[index]))
         {
             b.setBackgroundColor(Color.GREEN);
-            //view.invalidate();
             numCorrect++;
-
-            b.post(new Runnable() {
-                @Override
-                public void run() {
-                    b.setBackgroundColor(Color.GREEN);
-
-                }
-            });
-            view.postInvalidate();
-            /*
-            if (numCorrect == 2)
-            {
-                numCorrect = 0;
-                counter++;
-                b.setBackgroundColor(Color.GREEN);
-                android.os.SystemClock.sleep(1000);
-
-                setQuiz();
-            }
-            */
 
         }
         else
         {
             b.setBackgroundColor(Color.RED);
-            numIncorrect++;
+            //numIncorrect++;
         }
+        numClicks++;
         //checkCorrect();
 
 
-        if (numCorrect == 2)
+        if (numClicks == 2)
+        {
+            numClicks = 0;
+            counter++;
+
+            if (numCorrect == 2)
+            {
+                totalCorrect++;
+
+                if (englishOnly)
+                    dict.englishCorrectLast[index] = true;
+                else if (pinyinOnly)
+                    dict.pinyinCorrectLast[index] = true;
+                else if (chineseOnly)
+                    dict.charCorrectLast[index] = true;
+            }
+            else
+            {
+                totalIncorrect++;
+
+                if (englishOnly)
+                    dict.englishCorrectLast[index] = false;
+                else if (pinyinOnly)
+                    dict.pinyinCorrectLast[index] = false;
+                else if (chineseOnly)
+                    dict.charCorrectLast[index] = false;
+            }
+
+
+            b.post(new Runnable() {
+                @Override
+                public void run() {
+                    b.setBackgroundColor(Color.GREEN);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    setQuiz();
+                }
+            });
+
+        }
+
+
+
+        /*
+        if (numClicks == 2)
         {
             if (numCorrect == 2)
             {
-                numCorrect = 0;
+                numClicks = 0;
                 counter++;
                 b.post(new Runnable() {
                     @Override
@@ -297,39 +356,13 @@ public class QuizActivity extends AppCompatActivity {
                         setQuiz();
                     }
                 });
-                //b.setBackgroundColor(Color.GREEN);
-                //android.os.SystemClock.sleep(1000);
 
-                //setQuiz();
             }
         }
-
+        */
 
 
     }
-
-    /*
-    public void checkCorrect()
-    {
-        if (numCorrect == 2)
-        {
-            if (numCorrect == 2)
-            {
-                numCorrect = 0;
-                counter++;
-                //b.setBackgroundColor(Color.GREEN);
-                //android.os.SystemClock.sleep(1000);
-
-                setQuiz();
-            }
-        }
-    }
-    */
-
-
-
-
-
 
 
 

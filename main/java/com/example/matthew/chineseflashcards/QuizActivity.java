@@ -40,6 +40,10 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
+        //TextView testView = (TextView) findViewById(R.id.textView8);
+        //testView.setText(dict.lineOut);
+
+
         for (int i = 0; i < dict.used.length; i++)
         {
             dict.used[i] = false;
@@ -79,6 +83,10 @@ public class QuizActivity extends AppCompatActivity {
 
     public void setQuiz()
     {
+        //TextView testView = (TextView) findViewById(R.id.textView8);
+        //testView.setText(dict.lineOut);
+
+
         if (counter == 10) //dict.size)
         {
             //this.finish();
@@ -266,13 +274,11 @@ public class QuizActivity extends AppCompatActivity {
 
         intent.putExtra("editTextValue", passMessage);
         setResult(RESULT_OK, intent);
-        finish();
+        //finish();
 
         finish();
 
     }
-
-
 
 
     public void CheckButton(View view)
@@ -325,6 +331,7 @@ public class QuizActivity extends AppCompatActivity {
                     dict.charCorrectLast[index] = false;
             }
 
+            numCorrect = 0;
 
             b.post(new Runnable() {
                 @Override

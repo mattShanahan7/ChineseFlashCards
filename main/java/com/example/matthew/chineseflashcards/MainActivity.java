@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String RETURN_MESSAGE = "com.example.matthew.RET";
     String strEditText = "";
+    int totalCorrect = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, QuizActivity.class);
         String text = "Message";
         intent.putExtra(EXTRA_MESSAGE, text);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
         //finish();
     }
 
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, QuizActivity.class);
         String text = "English";
         intent.putExtra(EXTRA_MESSAGE, text);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
 
     }
 
@@ -64,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 strEditText = strEditText + data.getStringExtra("editTextValue");
             }
+            String[] getTotalCorrect = strEditText.split(" ");
+            totalCorrect += Integer.parseInt(getTotalCorrect[0]);
+            strEditText += " " + totalCorrect;
         }
 
         Intent intent2 = new Intent(this, ResultsActivity.class);

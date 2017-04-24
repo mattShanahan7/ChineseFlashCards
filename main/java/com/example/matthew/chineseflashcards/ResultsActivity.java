@@ -13,13 +13,8 @@ public class ResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
-
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE2);
-
-      //  TextView text1 = (TextView) findViewById(R.id.textView4);
-      //  text1.setText("Number Correct: " + message);
-
 
         String[] messageParts = message.split(" ");
 
@@ -32,14 +27,13 @@ public class ResultsActivity extends AppCompatActivity {
 
         text1.setText("Number Correct: " + messageParts[0]);
         text2.setText("Number Incorrect: " + messageParts[1]);
-        text3.setText("Miliseconds to Complete: " + messageParts[2]);
+        text3.setText("Seconds to Complete: " + messageParts[2]);
         text4.setText("Total Correct: "  + messageParts[3]);
     }
 
     public void backToStart(View view)
     {
         finish();
-       // Intent intent = new Intent(this, MainActivity.class);
-       // startActivity(intent);
+
     }
 }

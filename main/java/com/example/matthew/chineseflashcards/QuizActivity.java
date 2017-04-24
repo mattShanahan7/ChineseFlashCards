@@ -2,7 +2,6 @@ package com.example.matthew.chineseflashcards;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,12 +9,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-
 public class QuizActivity extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "com.example.matthew.passMessage";
     public static final String EXTRA_MESSAGE1 = "com.example.matthew.RESULTS";
-
 
     Dictionary dict = new Dictionary();
 
@@ -27,7 +24,6 @@ public class QuizActivity extends AppCompatActivity {
     int index;
     int counter; //to count how many questions have been asked
     int numCorrect;
-    //int numIncorrect;
     int totalCorrect;
     int totalIncorrect;
     int numClicks = 0; //number of picks per round
@@ -39,9 +35,6 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-
-        //TextView testView = (TextView) findViewById(R.id.textView8);
-        //testView.setText(dict.lineOut);
 
 
         for (int i = 0; i < dict.used.length; i++)
@@ -83,28 +76,9 @@ public class QuizActivity extends AppCompatActivity {
 
     public void setQuiz()
     {
-        //TextView testView = (TextView) findViewById(R.id.textView8);
-        //testView.setText(dict.lineOut);
-
-
         if (counter == 10) //dict.size)
         {
-            //this.finish();
             goToResults(findViewById(R.id.all));
-
-            //code to jump to the end screen activity
-          /*  long totalTime = System.currentTimeMillis() - startTime;
-
-
-            Intent intent = new Intent(this, ResultsActivity.class);
-            String passMessage = "";
-            passMessage += (totalCorrect + " ");
-            passMessage += (totalIncorrect + " ");
-            passMessage += (totalTime);
-
-            intent.putExtra(EXTRA_MESSAGE, passMessage);
-            startActivity(intent);
-            */
         }
 
         topButtons = new Button[]{
@@ -148,7 +122,7 @@ public class QuizActivity extends AppCompatActivity {
             {
                 if (j == topIndex)
                 {
-
+                    //nothing to do here
                 }
                 else
                 {
@@ -164,7 +138,7 @@ public class QuizActivity extends AppCompatActivity {
             {
                 if (j == bottomIndex)
                 {
-
+                    //nothing to do here
                 }
                 else
                 {
@@ -176,6 +150,8 @@ public class QuizActivity extends AppCompatActivity {
                 }
             }
         }//if (englishOnly)
+
+        //same for pinyin
         else if (pinyinOnly)
         {
             textView.setText(dict.pinyin[index]);
@@ -187,7 +163,7 @@ public class QuizActivity extends AppCompatActivity {
             {
                 if (j == topIndex)
                 {
-
+                    //nothing to do here
                 }
                 else
                 {
@@ -203,7 +179,7 @@ public class QuizActivity extends AppCompatActivity {
             {
                 if (j == bottomIndex)
                 {
-
+                    //nothing to do here
                 }
                 else
                 {
@@ -216,6 +192,7 @@ public class QuizActivity extends AppCompatActivity {
             }
         }//end pinyin
 
+        //same for chinese
         else if (chineseOnly)
         {
             textView.setText(dict.characters[index]);
@@ -227,7 +204,7 @@ public class QuizActivity extends AppCompatActivity {
             {
                 if (j == topIndex)
                 {
-
+                    //nothing to do here
                 }
                 else
                 {
@@ -243,7 +220,7 @@ public class QuizActivity extends AppCompatActivity {
             {
                 if (j == bottomIndex)
                 {
-
+                    //nothing to do here
                 }
                 else
                 {
@@ -264,8 +241,8 @@ public class QuizActivity extends AppCompatActivity {
     {
         //code to jump to the end screen activity
         long totalTime = System.currentTimeMillis() - startTime;
+        totalTime = totalTime / 1000;
 
-       // Intent intent = new Intent( );
         Intent intent = getIntent();
         String passMessage = "";
         passMessage += (totalCorrect + " ");
@@ -274,7 +251,6 @@ public class QuizActivity extends AppCompatActivity {
 
         intent.putExtra("editTextValue", passMessage);
         setResult(RESULT_OK, intent);
-        //finish();
 
         finish();
 
@@ -297,11 +273,8 @@ public class QuizActivity extends AppCompatActivity {
         else
         {
             b.setBackgroundColor(Color.RED);
-            //numIncorrect++;
         }
         numClicks++;
-        //checkCorrect();
-
 
         if (numClicks == 2)
         {
@@ -348,35 +321,7 @@ public class QuizActivity extends AppCompatActivity {
 
         }
 
-
-
-        /*
-        if (numClicks == 2)
-        {
-            if (numCorrect == 2)
-            {
-                numClicks = 0;
-                counter++;
-                b.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        b.setBackgroundColor(Color.GREEN);
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        setQuiz();
-                    }
-                });
-
-            }
-        }
-        */
-
-
     }
 
 
-
-}//END CLASS
+}

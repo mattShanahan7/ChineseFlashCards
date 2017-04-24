@@ -12,70 +12,11 @@ import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 
-/**
- * Created by Matthew on 4/21/17.
- */
 
 public final class Dictionary
 {
 
     public int size = 28;
-
-
-
-    /*
-    public Dictionary()
-    {
-        String _url = "http://people.cs.georgetown.edu/~bk620/chidi.txt";
-
-        URL url;
-        //BufferedOutputStream out;
-        //InputStream in;
-        //BufferedInputStream buf;
-        BufferedReader reader;
-
-        try
-        {
-            url = new URL(_url);
-            //reader = new BufferedReader(new InputStreamReader(url.openStream()));
-            reader = new BufferedReader(new FileReader("/Users/Matthew/Desktop/input.txt"));
-
-            //reader = url.openStream();
-
-            // Read the inputstream
-            //buf = new BufferedInputStream(in);
-
-
-            String line = "";
-            int counter = 0;
-            while ((line = reader.readLine()) != null)
-            {
-                String[] lineSplit = line.split(",");
-                characters[counter] = lineSplit[0];
-                pinyin[counter] = lineSplit[1];
-                english[counter] = lineSplit[2];
-                counter++;
-                //lineOut = "In loop";
-            }
-
-           // Log.d("Output", line);
-
-          //  lineOut = ""+ counter;
-
-            reader.close();
-            size = counter;
-
-        }
-        catch (Exception e)
-        {
-            Log.e("Error reading file", e.toString());
-        }
-
-    }
-    */
-
-
-
 
 
     public String[] characters = {
